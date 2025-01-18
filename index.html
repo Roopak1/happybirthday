@@ -3,27 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday, Rani!</title>
+    <title>Interactive Celebration</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
-    <div class="container">
-        <div class="card">
-            <h1>🎉 Happy Birthday, Rani! 🎉</h1>
-            <p>You are the light of my life, and this little surprise is just for you!</p>
-            <button id="openCard">Open Your Card</button>
-        </div>
-
-        <div id="surpriseSection" class="hidden">
-            <div class="surprise">
-                <h2>Dear Rani,</h2>
-                <p>You are more special to me than words can say. 🌹</p>
-                <p>Thank you for being the amazing person you are. This is your day, and I hope it’s as wonderful as you are! 💖</p>
-                <img src="https://via.placeholder.com/300x200?text=Happy+Birthday!" alt="Birthday Surprise">
-                <button id="closeCard">Close</button>
-            </div>
+    <div id="container">
+        <button id="actionButton">Light Up</button>
+        <div id="strips" class="hidden"></div>
+        <div id="balloons" class="hidden"></div>
+        <div id="cake" class="hidden">
+            <img src="https://via.placeholder.com/300x300?text=Cake" alt="Cake">
         </div>
     </div>
-    <script src="script.js"></script>
 </body>
 </html>
