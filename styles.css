@@ -5,7 +5,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #000; /* Start with dark background */
+    background-color: #000; /* Start dark */
     transition: background-color 0.5s ease;
     font-family: Arial, sans-serif;
     color: white;
@@ -15,7 +15,7 @@ body {
     display: none;
 }
 
-#startPage, #mainPage {
+#mainContent {
     text-align: center;
 }
 
@@ -35,8 +35,21 @@ button:hover {
     transform: scale(1.05);
 }
 
-/* Strips */
-#strips {
+/* Banner */
+#birthdayBanner {
+    font-size: 3rem;
+    color: #ff69b4;
+    text-shadow: 0 0 10px #ff69b4;
+    animation: slideIn 1s ease-out;
+}
+
+@keyframes slideIn {
+    0% { transform: translateY(-100px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+/* Lights */
+#lights {
     position: fixed;
     top: 0;
     width: 100%;
@@ -45,22 +58,17 @@ button:hover {
     justify-content: space-evenly;
     align-items: center;
     z-index: -1;
-    opacity: 0;
-    transition: opacity 0.5s;
 }
 
-.strip {
+.light {
     width: 10%;
     height: 100%;
     animation: glow 1s infinite alternate;
 }
 
-.strip:nth-child(1) { background-color: #ff5733; }
-.strip:nth-child(2) { background-color: #33ff57; }
-.strip:nth-child(3) { background-color: #3357ff; }
-.strip:nth-child(4) { background-color: #ff33a2; }
-.strip:nth-child(5) { background-color: #ffbd33; }
-.strip:nth-child(6) { background-color: #ff00ff; }
+.light:nth-child(1) { background-color: #ff5733; }
+.light:nth-child(2) { background-color: #33ff57; }
+.light:nth-child(3) { background-color: #3357ff; }
 
 @keyframes glow {
     0% { opacity: 0.5; }
@@ -83,11 +91,8 @@ button:hover {
     width: 50px;
     height: 70px;
     background-color: red;
-    border-radius: 50% 50% 50% 50%;
+    border-radius: 50%;
     animation: float 6s linear infinite;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .string {
@@ -96,32 +101,15 @@ button:hover {
     width: 2px;
     height: 30px;
     background-color: black;
-    transform: translateY(-10px);
 }
 
 @keyframes float {
-    0% {
-        transform: translateY(0) rotate(0deg);
-    }
-    100% {
-        transform: translateY(-120vh) rotate(360deg);
-    }
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-120vh); }
 }
 
-/* Cake */
-#cake {
-    margin-top: 20px;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
-
-#cake img {
-    max-width: 300px;
-    border-radius: 15px;
-}
-
-/* Lovely Message Popup */
-#popupMessage {
+/* Popup */
+#popup {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -131,6 +119,6 @@ button:hover {
     border-radius: 10px;
     text-align: center;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    color: black;
     font-size: 1.5rem;
-    display: none;
 }
