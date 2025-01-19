@@ -3,26 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Celebration</title>
+    <title>Happy Birthday</title>
     <link rel="stylesheet" href="styles.css">
     <script src="script.js" defer></script>
 </head>
 <body>
-    <!-- Start Page -->
-    <div id="startPage">
-        <h1>I made you something, would you like to see?</h1>
-        <button id="yesButton">Yes</button>
-        <button id="noButton">No</button>
-    </div>
-
-    <!-- Main Page -->
-    <div id="mainPage" class="hidden">
+    <!-- Main Content -->
+    <div id="mainContent">
+        <h1 id="birthdayBanner" class="hidden">Happy Birthday!</h1>
         <button id="actionButton">Light Up</button>
-        <div id="strips" class="hidden"></div>
+        <div id="lights" class="hidden"></div>
         <div id="balloons" class="hidden"></div>
         <div id="cake" class="hidden">
             <img src="https://via.placeholder.com/300x300?text=Cake" alt="Cake">
         </div>
+    </div>
+
+    <!-- Popup -->
+    <div id="popup" class="hidden">
+        <h2>💖 Happy Birthday to You! 💖</h2>
+        <p>
+            You make every day brighter, and I hope this day is as special as you are! 
+            Wishing you all the love, laughter, and joy. 🎉🎂💖
+        </p>
+        <button id="closePopup">Close</button>
     </div>
 </body>
 </html>
