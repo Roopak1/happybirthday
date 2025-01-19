@@ -1,25 +1,13 @@
 // Select elements
-const startPage = document.getElementById("startPage");
-const mainPage = document.getElementById("mainPage");
-const yesButton = document.getElementById("yesButton");
-const noButton = document.getElementById("noButton");
 const actionButton = document.getElementById("actionButton");
-const strips = document.getElementById("strips");
+const birthdayBanner = document.getElementById("birthdayBanner");
+const lights = document.getElementById("lights");
 const balloons = document.getElementById("balloons");
 const cake = document.getElementById("cake");
+const popup = document.getElementById("popup");
+const closePopup = document.getElementById("closePopup");
 
 let stage = 0;
-
-// Start Page Logic
-yesButton.addEventListener("click", () => {
-    startPage.classList.add("hidden");
-    mainPage.classList.remove("hidden");
-});
-
-noButton.addEventListener("click", () => {
-    alert("Okay, maybe next time! 😊");
-    window.close(); // Attempts to close the window (may not work in some browsers).
-});
 
 // Button Click Logic
 actionButton.addEventListener("click", () => {
@@ -29,8 +17,8 @@ actionButton.addEventListener("click", () => {
             actionButton.textContent = "Lights";
             stage++;
             break;
-        case 1: // Show Strips
-            showStrips();
+        case 1: // Show Lights
+            showLights();
             actionButton.textContent = "Balloons";
             stage++;
             break;
@@ -39,38 +27,38 @@ actionButton.addEventListener("click", () => {
             actionButton.textContent = "Cake";
             stage++;
             break;
-        case 3: // Show Cake
+        case 3: // Cake
             cake.classList.remove("hidden");
             actionButton.textContent = "Lovely Message";
             stage++;
             break;
         case 4: // Lovely Message
-            showLovelyMessage();
+            popup.classList.remove("hidden");
+            actionButton.style.display = "none";
             break;
     }
 });
 
-// Function to show strips
-function showStrips() {
-    strips.classList.remove("hidden");
+// Show Lights
+function showLights() {
+    lights.classList.remove("hidden");
     for (let i = 0; i < 6; i++) {
-        const strip = document.createElement("div");
-        strip.className = "strip";
-        strips.appendChild(strip);
+        const light = document.createElement("div");
+        light.className = "light";
+        lights.appendChild(light);
     }
 }
 
-// Function to show balloons
+// Show Balloons
 function showBalloons() {
     balloons.classList.remove("hidden");
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 20; i++) {
         const balloon = document.createElement("div");
         balloon.className = "balloon";
         balloon.style.backgroundColor = getRandomColor();
         balloon.style.left = Math.random() * 100 + "vw";
-        balloon.style.animationDuration = 4 + Math.random() * 3 + "s";
+        balloon.style.animationDuration = 4 + Math.random() * 2 + "s";
 
-        // Add string to balloon
         const string = document.createElement("div");
         string.className = "string";
         balloon.appendChild(string);
@@ -79,24 +67,13 @@ function showBalloons() {
     }
 }
 
-// Function to generate random colors
+// Random Color Generator
 function getRandomColor() {
     const colors = ["#ff5733", "#33ff57", "#3357ff", "#ff33a2", "#ffbd33"];
     return colors[Math.floor(Math.random() * colors.length)];
 }
 
-// Function to show the lovely message
-function showLovelyMessage() {
-    const popup = document.createElement("div");
-    popup.id = "popupMessage";
-    popup.innerHTML = `
-        <h2>💖 To the most amazing person 💖</h2>
-        <p>
-            You light up my world in every way imaginable. Thank you for being you. 
-            I hope this little gift brings a smile to your face, just like you bring one to mine every day. 
-            Happy Birthday! 🎉💖
-        </p>
-    `;
-    document.body.appendChild(popup);
-    actionButton.style.display = "none";
-}
+// Close Popup
+closePopup.addEventListener("click", () => {
+    popup.classList.add("hidden");
+});
