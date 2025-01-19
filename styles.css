@@ -7,6 +7,8 @@ body {
     align-items: center;
     background-color: #000; /* Start with dark background */
     transition: background-color 0.5s ease;
+    font-family: Arial, sans-serif;
+    color: white;
 }
 
 .hidden {
@@ -53,7 +55,6 @@ button:hover {
     animation: glow 1s infinite alternate;
 }
 
-/* Random glowing colors */
 .strip:nth-child(1) { background-color: #ff5733; }
 .strip:nth-child(2) { background-color: #33ff57; }
 .strip:nth-child(3) { background-color: #3357ff; }
