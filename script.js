@@ -18,7 +18,6 @@ window.addEventListener('load', () => {
     });
 });
 
-
 // animation timeline
 const animationTimeline = () => {
     // split chars that needs to be animated individually
@@ -99,10 +98,10 @@ const animationTimeline = () => {
         1.5, {
             visibility: "visible",
         },
-        0.05
+        0.06
     )
     .to(".fake-btn", 0.1, {
-        backgroundColor: "rgb(127, 206, 248)",
+        backgroundColor: "rgb(255, 82, 241)",
     },
     "+=4")
     .to(
