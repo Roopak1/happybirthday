@@ -3,8 +3,24 @@ html {
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  background: radial-gradient(circle at top left,#ffa3f7 , #fa6bff );
+  background-size: 150% 150%;
+  animation: gradientAnimation 10s linear infinite; /* Using linear easing for smooth, consistent transitions */
   margin: 0;
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
 }
 
 .song {
@@ -50,17 +66,31 @@ body {
   width: 600px;
 }
 
-.text-box p {
-  margin: 0;
-  text-align: left;
+.four .text-box {
+  border: 3px solid #aaa;
+  border-radius: 5px;
+  margin: 0 auto;
+  padding: 10px;
+  position: relative;
+  width: 600px; /* or whatever your original width was */
+  background-color: #fff; /* makes the inside white */
+  /* Optional shadow to separate it from the background */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+.four .text-box p {
+  margin: 0;
+  text-align: left; /* or center, depending on your preference */
+  color: #000;      /* Use black or dark color for contrast on white */
+}
+
 
 .text-box span {
   visibility: hidden;
 }
 
 .text-box .fake-btn {
-  background-color: rgb(21, 161, 237);
+  background-color: rgb(255, 188, 252);
   border-radius: 3px;
   bottom: -50px;
   color: #fff;
@@ -289,4 +319,15 @@ body {
     font-size: 1.5rem;
     font-weight: lighter;
   }
+
+  img {
+    pointer-events: none;  /* Prevents interactions */
+    user-select: none;     /* Disables selection */
+    -webkit-user-drag: none; /* Stops dragging in WebKit browsers */
+  }
+  
+  .image-container {
+    pointer-events: none;  /* Prevents clicks inside the container */
+  }    
+
 }
