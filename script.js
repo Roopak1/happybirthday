@@ -22,11 +22,21 @@ window.addEventListener('load', () => {
 const animationTimeline = () => {
     // split chars that needs to be animated individually
     const textBoxChars = document.getElementsByClassName("hbd-chatbox")[0];
-    const hbd = document.getElementsByClassName("wish-hbd")[0];
+    // Replace full stops with <br/> and split into segments
+    let replacedText = textBoxChars.innerHTML.replace(/\.\s*/g, '.<br/>');
+    let segments = replacedText.split(/<br\s*\/?>/gi);
 
-    textBoxChars.innerHTML = `<span>${textBoxChars.innerHTML
-        .split("")
-        .join("</span><span>")}</span>`;
+    // Now wrap each segment in a container with class "line" and each character in its own span.
+    segments = segments.map(segment => {
+        // Trim to remove extra whitespace and split into characters
+        const letterSpans = segment.trim().split("").map(letter => `<span>${letter}</span>`).join("");
+        return `<div class="line">${letterSpans}</div>`;
+    });
+
+    // Replace the innerHTML with the new content (do not include extra <br/> tags since each line is its own block)
+    textBoxChars.innerHTML = segments.join('');
+
+    const hbd = document.getElementsByClassName("wish-hbd")[0];
 
     hbd.innerHTML = `<span>${hbd.innerHTML
         .split("")
@@ -52,6 +62,14 @@ const animationTimeline = () => {
     tl.to(".container", 0.6, {
         visibility: "visible"
     })
+    .from(".zero", 0.7, {
+        opacity: 0,
+        y: 10
+    })
+    .to(".zero", 0.7, {
+        opacity: 0,
+        y: 10
+    }, "+=3")
     .from(".one", 0.7, {
         opacity: 0,
         y: 10
@@ -98,7 +116,7 @@ const animationTimeline = () => {
         1.5, {
             visibility: "visible",
         },
-        0.06
+        0.09 // stagger time     
     )
     .to(".fake-btn", 0.1, {
         backgroundColor: "rgb(255, 82, 241)",
@@ -262,6 +280,7 @@ const animationTimeline = () => {
         },
         "+=1"
     );
+
 
     // Restart Animation on click
     const replyBtn = document.getElementById("replay");
