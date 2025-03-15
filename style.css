@@ -461,3 +461,44 @@ body {
     top: 1cm;
   }
 }
+
+@media screen and (max-width: 500px), screen and (aspect-ratio: 9/19) {
+  .container {
+    /* Shift the container to 1cm from the top */
+    top: 1cm;
+    width: 90%;
+    padding: 0 5%;
+  }
+  
+  .container > div {
+    /* Bring the content (like the text box) closer to the top */
+    top: 2cm;
+  }
+  
+  .four .text-box {
+    width: 90%;
+    padding: 8px;
+    margin: 0 auto;
+    margin-bottom: 3.5rem; /* Adequate space below for the fake-btn */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .text-box .fake-btn {
+    /* Ensure the fake button doesn't overlap the text box */
+    bottom: -50px;
+    right: 5%;
+    padding: 0.4rem 0.8rem;
+  }
+  
+  .baloons img {
+    /* Make balloons smaller on phones */
+    max-height: 80px;
+  }
+  
+  .wish-hbd {
+    /* Reduce the “Happy Birthday” text and enforce one line */
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
