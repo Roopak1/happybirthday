@@ -69,7 +69,7 @@ const animationTimeline = () => {
     .to(".zero", 0.7, {
         opacity: 0,
         y: 10
-    }, "+=3")
+    }, "+=0")
     .from(".one", 0.7, {
         opacity: 0,
         y: 10
@@ -116,10 +116,10 @@ const animationTimeline = () => {
         1.5, {
             visibility: "visible",
         },
-        0.0001 // stagger time     
+        0.00001// stagger time     
     )
     .to(".fake-btn", 0.1, {
-        backgroundColor: "rgb(255, 82, 241)",
+        backgroundColor: "rgb(255,128,160)",
     },
     "+=4")
     .to(
@@ -138,7 +138,7 @@ const animationTimeline = () => {
     .to(".idea-3 strong", 0.5, {
         scale: 1.2,
         x: 10,
-        backgroundColor: "rgb(21, 161, 237)",
+        backgroundColor: "rgb(255,128,160)",
         color: "#fff",
     })
     .to(".idea-3", 0.7, ideaTextTransLeave, "+=2.5")
@@ -195,14 +195,18 @@ const animationTimeline = () => {
     )
     .staggerFromTo(
         ".baloons img",
-        2.5, {
+        2.5, 
+        {
             opacity: 0.9,
             y: 1400,
-        }, {
+            x: () => Math.random() * 200 - 100  // random horizontal offset at start
+        }, 
+        {
             opacity: 1,
             y: -1000,
+            x: () => Math.random() * 200 - 100  // random horizontal offset at end
         },
-        0.2
+        0.1
     )
     .from(
         ".profile-picture",
@@ -241,11 +245,21 @@ const animationTimeline = () => {
         }, {
             scale: 1,
             rotationY: 0,
-            color: "#ff69b4",
+            color: "rgb(196, 95, 212)",
             ease: Expo.easeOut,
         },
         0.1,
         "party"
+    )
+    // Add glow effect tween after the Expo.easeOut tween
+    .to(
+        ".wish-hbd span",
+        1,
+        {
+            textShadow: "0px 0px 20px #d883e6", // adjust color and blur as desired
+            ease: Expo.easeOut,
+        },
+        "party+=0.7" // position the tween 0.7 seconds after the "party" label
     )
     .from(
         ".wish h5",
@@ -287,4 +301,122 @@ const animationTimeline = () => {
     replyBtn.addEventListener("click", () => {
         tl.restart();
     });
+
+    // Create emoji rain
+    createEmojiRain();
+}
+
+/**
+ * Enhanced Emoji Rain with combined features
+ * @param {Object} options - Animation options
+ * @param {number} options.minSize - Minimum emoji size in pixels (default: 15)
+ * @param {number} options.maxSize - Maximum emoji size in pixels (default: 50)
+ * @param {number} options.baseSpeed - Base falling speed in seconds (default: 5)
+ * @param {number} options.speedFactor - Speed multiplier (default: 1.5)
+ * @param {number} options.frequency - Milliseconds between emoji creation (default: 300)
+ * @param {boolean} options.behindContent - Position emojis behind content (default: true)
+ */
+function createEmojiRain(options = {}) {
+    // Default settings with combined configuration options
+    const settings = {
+        minSize: 25,             // Minimum emoji size in pixels
+        maxSize: 60,             // Maximum emoji size in pixels
+        baseSpeed: 5,            // Base falling duration
+        speedFactor: 1,        // Speed multiplier (higher = slower)
+        frequency: 500,          // Milliseconds between emoji creation
+        behindContent: true,     // Position emojis behind other content
+        ...options
+    };
+    
+    // Combined emoji list from both implementations
+    const emojis = ['🎂', '🎁', '🎉', '🎊', '✨', '💖', '🍰', '🧁', '🍬', '🥳', '😍', '❤️', '💓', '💗', '💖', '💞', '💕', '💘', '💝'];
+    
+    // Create or get container for emojis
+    let emojiContainer = document.querySelector('.emoji-rain');
+    if (!emojiContainer) {
+        emojiContainer = document.createElement('div');
+        emojiContainer.className = 'emoji-rain';
+        document.body.appendChild(emojiContainer);
+        
+        // Add styling for the container
+        const style = document.createElement('style');
+        style.innerHTML = `
+            .emoji-rain {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: ${settings.behindContent ? '-1' : '100'};
+                overflow: hidden;
+            }
+            .emoji-rain span {
+                position: absolute;
+                user-select: none;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    // Create interval for continuous emoji creation
+    const intervalId = setInterval(() => {
+        // Create emoji element
+        const emoji = document.createElement('span');
+        emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        emojiContainer.appendChild(emoji);
+        
+        // Random size between min and max
+        const size = Math.random() * (settings.maxSize - settings.minSize) + settings.minSize;
+        emoji.style.fontSize = `${size}px`;
+        
+        // Random position and rotation
+        const startX = Math.random() * window.innerWidth;
+        const rotation = Math.random() * 15;
+        
+        // Calculate duration with variation for natural feel
+        const durationVariation = gsap.utils.random(0.8, 1.2);
+        const duration = settings.baseSpeed * settings.speedFactor * durationVariation;
+        
+        // Apply GSAP animation with combined approach
+        gsap.fromTo(emoji, 
+            {
+                x: startX,
+                y: -50,
+                rotation: rotation,
+                opacity: gsap.utils.random(0.7, 1),
+            },
+            {
+                y: window.innerHeight + 100,
+                x: startX + gsap.utils.random(-50, 50),
+                rotation: rotation + gsap.utils.random(-15, 15),
+                duration: duration,
+                // Use your preferred ease (power1.out for smoother movement)
+                ease: "power1.out",
+                onComplete: () => {
+                    // Clean up DOM
+                    if (emoji.parentNode) {
+                        emoji.parentNode.removeChild(emoji);
+                    }
+                }
+            }
+        );
+    }, settings.frequency);
+    
+    // Return control object
+    return {
+        stop: () => clearInterval(intervalId)
+    };
+}
+
+// Simple start function
+function startEmojiRain(options = {}) {
+    return createEmojiRain(options);
+}
+
+// Simple stop function
+function stopEmojiRain(controller) {
+    if (controller && controller.stop) {
+        controller.stop();
+    }
 }
