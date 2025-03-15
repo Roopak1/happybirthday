@@ -375,7 +375,7 @@ body {
   }
 
   .idea-6 span {
-    font-size: 10rem;
+    font-size: 5rem;
   }
 
   .six .hat {
@@ -433,7 +433,7 @@ body {
   .wish-hbd {
     /* Slightly reduce “Happy Birthday” text 
        and force it onto a single line if possible */
-    font-size: 1.8rem;
+    font-size: 1rem;
     white-space: nowrap;
   }
 }
@@ -441,7 +441,7 @@ body {
 @media screen and (max-width: 500px), screen and (aspect-ratio: 9/19) {
   .container {
     /* Shift the container a bit more upward for vertical screens */
-    top: 7vh;
+    top: 2vh;
   }
 
   .four .text-box {
