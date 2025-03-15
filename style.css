@@ -454,3 +454,10 @@ body {
     bottom: -50px;
   }
 }
+
+@media screen and (max-width: 500px), screen and (aspect-ratio: 9/19) {
+  .container {
+    /* Shift the container to about 1cm from the top */
+    top: 1cm;
+  }
+}
