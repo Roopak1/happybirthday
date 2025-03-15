@@ -3,7 +3,7 @@ html {
 }
 
 body {
-  background: radial-gradient(circle at top left,#a3c3ff , #6ba6ff );
+  background: radial-gradient(circle at top left,#91b6fa , #5597fa );
   background-size: 150% 150%;
   animation: gradientAnimation 10s linear infinite; /* Using linear easing for smooth, consistent transitions */
   margin: 0;
@@ -49,16 +49,16 @@ body {
 }
 
 .one {
-  font-size: 4.5rem;
+  font-size: 5rem;
 }
 
 .two {
-  font-size: 1.2rem;
+  font-size: 2rem;
   font-weight: lighter;
 }
 
 .three {
-  font-size: 3rem;
+  font-size: 4rem;
 }
 
 .four .text-box {
@@ -93,7 +93,7 @@ body {
 }
 
 .text-box .fake-btn {
-  background-color: rgb(255, 188, 252);
+  background-color: #ffa6b8;
   border-radius: 3px;
   bottom: -50px;
   color: #fff;
@@ -103,20 +103,20 @@ body {
 }
 
 .five p {
-  font-size: 2rem;
+  font-size: 3rem;
   left: 0;
   position: absolute;
   right: 0;
 }
 
 .idea-3 strong {
-  border-radius: 3px;
+  border-radius: 4px;
   display: inline-block;
-  padding: 3px 5px;
+  padding: 4px 5px;
 }
 
 .five .idea-5 {
-  font-size: 4rem;
+  font-size: 5rem;
 }
 
 .idea-5 span, .idea-6 span, .wish-hbd span {
@@ -150,6 +150,8 @@ body {
 }
 
 .baloons img {
+  height: 500px;
+  width: auto;
   display: inline-block;
   position: absolute;
 }
@@ -183,61 +185,61 @@ body {
 }
 
 .eight svg:nth-child(1) {
-  fill: #bd6ecf;
+  fill: #ffccd5; /* light pink */
   left: 5vw;
   top: 7vh;
 }
 
 .eight svg:nth-child(2) {
-  fill: #7dd175;
+  fill: #ffb3c1; /* light pink */
   left: 35vw;
   top: 23vh;
 }
 
 .eight svg:nth-child(3) {
-  fill: #349d8b;
+  fill: #ffa6b8; /* light pink */
   left: 23vw;
   top: 33vh;
 }
 
 .eight svg:nth-child(4) {
-  fill: #347a9d;
+  fill: #ff99ab; /* light pink */
   left: 57vw;
   top: 43vh;
 }
 
 .eight svg:nth-child(5) {
-  fill: #c66053;
+  fill: #ff8da0; /* light pink */
   left: 7vw;
   top: 68vh;
 }
 
 .eight svg:nth-child(6) {
-  fill: #bfaa40;
+  fill: #ff80a0; /* light pink */
   left: 77vw;
   top: 42vh;
 }
 
 .eight svg:nth-child(7) {
-  fill: #e3bae8;
+  fill: #ff73a2; /* light pink */
   left: 83vw;
   top: 68vh;
 }
 
 .eight svg:nth-child(8) {
-  fill: #8762cb;
+  fill: #ff668a; /* light pink */
   left: 37vw;
   top: 86vh;
 }
 
 .eight svg:nth-child(9) {
-  fill: #9a90da;
+  fill: #ff5a81; /* light pink */
   left: 87vw;
   top: 94vh;
 }
 
 .wish-hbd {
-  font-size: 3em;
+  font-size: 5em;
   margin: 0;
   text-transform: uppercase;
 }
@@ -253,276 +255,8 @@ body {
   font-weight: lighter;
 }
 
+
 #replay {
   cursor: pointer;
   z-index: 3;
-}
-
-/* Media Queries */
-@media screen and (max-height: 1000px) {
-  .six .hat {
-    left: 40%;
-  }
-}
-
-@media screen and (max-height: 800px) {
-  .six .hat {
-    left: 37%;
-  }
-}
-
-@media screen and (max-height: 700px) {
-  .six .hat {
-    left: 32%;
-  }
-}
-
-@media screen and (max-height: 850px) and (max-width: 450px) {
-  .six .hat {
-    left: 32%;
-  }
-}
-
-@media screen and (max-width: 500px) {
-  .container {
-    width: 100%;
-    padding: 0 5%;
-  }
-
-  .container > div {
-    top: 20vh; /* Reset to original value */
-  }
-
-  .one {
-    font-size: 3rem;
-  }
-
-  .two {
-    font-size: 1rem;
-  }
-
-  .three {
-    font-size: 2.5rem;
-  }
-
-  .four .text-box {
-    width: 100%;
-    padding: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-
-  .text-box {
-    font-size: 0.9rem;
-  }
-
-  .text-box .fake-btn {
-    padding: 0.4rem 0.8rem;
-    bottom: -30px;
-    right: 2%;
-  }
-
-  .five p {
-    font-size: 1.5rem;
-  }
-
-  .idea-5 span,
-  .idea-6 span,
-  .wish-hbd span {
-    display: block;
-  }
-
-  .idea-6 span {
-    font-size: 10rem;
-  }
-
-  .six {
-    top: 10vh; /* Reset to original value */
-  }
-
-  .six .hat {
-    top: -20px;
-    width: 50px;
-    left: 45%;
-  }
-
-  .wish-hbd {
-    font-size: 2em;
-  }
-
-  .wish h5 {
-    font-size: 1.4rem;
-  }
-
-  .nine p {
-    font-size: 1.5rem;
-  }
-
-  .container {
-    width: 90%;
-  }
-
-  .four .text-box {
-    width: 90%;
-  }
-
-  .text-box .fake-btn {
-    bottom: -38px;
-    right: 5px;
-  }
-
-  .idea-5 span {
-    display: block;
-  }
-
-  .idea-6 span {
-    font-size: 5rem;
-  }
-
-  .six .hat {
-    /* top: -20px; */
-    width: 50px;
-  }
-
-  .wish-hbd {
-    font-size: 2.2em;
-  }
-
-  .wish h5 {
-    font-size: 1.4rem;
-  }
-
-  .nine p {
-    font-size: 1.5rem;
-    font-weight: lighter;
-  }
-
-  img {
-    pointer-events: none;  /* Prevents interactions */
-    user-select: none;     /* Disables selection */
-    -webkit-user-drag: none; /* Stops dragging in WebKit browsers */
-  }
-  
-  .image-container {
-    pointer-events: none;  /* Prevents clicks inside the container */
-  }    
-
-}
-
-@media screen and (max-width: 500px), screen and (aspect-ratio: 9/19) {
-  .container {
-    /* Shift the container a bit upward for vertical screens */
-    top: 10vh; 
-  }
-
-  .four .text-box {
-    /* Ensures enough space between box content and the fake button */
-    margin-bottom: 3rem;
-  }
-
-  .text-box .fake-btn {
-    /* Keeps the button from colliding with the box */
-    bottom: -40px; 
-    right: 5%;
-  }
-
-  .baloons img {
-    /* Make balloons smaller on phones */
-    max-height: 100px;
-  }
-
-  .wish-hbd {
-    /* Slightly reduce “Happy Birthday” text 
-       and force it onto a single line if possible */
-    font-size: 1rem;
-    white-space: nowrap;
-  }
-}
-
-@media screen and (max-width: 500px), screen and (aspect-ratio: 9/19) {
-  .container {
-    /* Shift the container a bit more upward for vertical screens */
-    top: 2vh;
-  }
-
-  .four .text-box {
-    /* Increase bottom margin for fake-btn clearance */
-    margin-bottom: 3.5rem;
-  }
-
-  .text-box .fake-btn {
-    /* Raise the button a bit more */
-    bottom: -50px;
-  }
-}
-
-@media screen and (max-width: 500px), screen and (aspect-ratio: 9/19) {
-  .container {
-    /* Shift the container to about 1cm from the top */
-    top: 1cm;
-  }
-}
-
-@media screen and (max-width: 500px), screen and (aspect-ratio: 9/19) {
-  .container {
-    /* Shift the container to 1cm from the top */
-    top: 1cm;
-    width: 90%;
-    padding: 0 5%;
-  }
-  
-  .container > div {
-    /* Bring the content (like the text box) closer to the top */
-    top: 2cm;
-  }
-  
-  .four .text-box {
-    width: 90%;
-    padding: 8px;
-    margin: 0 auto;
-    margin-bottom: 3.5rem; /* Adequate space below for the fake-btn */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
-  
-  .text-box .fake-btn {
-    /* Ensure the fake button doesn't overlap the text box */
-    bottom: -50px;
-    right: 5%;
-    padding: 0.4rem 0.8rem;
-  }
-  
-  .baloons img {
-    /* Make balloons smaller on phones */
-    max-height: 120px;
-  }
-  
-  .wish-hbd {
-    /* Reduce the “Happy Birthday” text and enforce one line */
-    font-size: 1rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-}
-
-@media screen and (max-width: 500px), screen and (aspect-ratio: 9/19) {
-  .eight svg {
-    /* Shrink them for a less “spammy” look on phones */
-    width: 20px;
-    visibility: visible;
-  }
-
-  /* Hide everything after the first four */
-  .eight svg:nth-child(n+5) {
-    display: none;
-  }
-}
-
-.phone-only {
-  display: none;
-}
-
-@media screen and (max-width: 500px), screen and (aspect-ratio: 9/19) {
-  .phone-only {
-    display: inline-block;
-  }
 }
