@@ -290,7 +290,7 @@ body {
   }
 
   .container > div {
-    top: 5vh; /* was 20vh */
+    top: 20vh; /* Reset to original value */
   }
 
   .one {
@@ -336,7 +336,7 @@ body {
   }
 
   .six {
-    top: 0; /* was 10vh */
+    top: 10vh; /* Reset to original value */
   }
 
   .six .hat {
