@@ -240,9 +240,6 @@ body {
   font-size: 3em;
   margin: 0;
   text-transform: uppercase;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .wish h5 {
@@ -495,7 +492,7 @@ body {
   
   .baloons img {
     /* Make balloons smaller on phones */
-    max-height: 80px;
+    max-height: 120px;
   }
   
   .wish-hbd {
@@ -503,5 +500,29 @@ body {
     font-size: 1rem;
     white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@media screen and (max-width: 500px), screen and (aspect-ratio: 9/19) {
+  .eight svg {
+    /* Shrink them for a less “spammy” look on phones */
+    width: 20px;
+    visibility: visible;
+  }
+
+  /* Hide everything after the first four */
+  .eight svg:nth-child(n+5) {
+    display: none;
+  }
+}
+
+.phone-only {
+  display: none;
+}
+
+@media screen and (max-width: 500px), screen and (aspect-ratio: 9/19) {
+  .phone-only {
+    display: inline-block;
   }
 }
