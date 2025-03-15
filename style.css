@@ -407,3 +407,21 @@ body {
   }    
 
 }
+
+@media screen and (max-width: 500px), screen and (aspect-ratio: 9/19) {
+  .container {
+    /* Shift the container a bit upward for vertical screens */
+    top: 10vh; 
+  }
+
+  .four .text-box {
+    /* Ensures enough space between box content and the fake button */
+    margin-bottom: 3rem;
+  }
+
+  .text-box .fake-btn {
+    /* Keeps the button from colliding with the box */
+    bottom: -40px; 
+    right: 5%;
+  }
+}
