@@ -69,7 +69,7 @@ const animationTimeline = () => {
     .to(".zero", 0.7, {
         opacity: 0,
         y: 10
-    }, "+=0")
+    }, "+=7")
     .from(".one", 0.7, {
         opacity: 0,
         y: 10
@@ -116,7 +116,7 @@ const animationTimeline = () => {
         1.5, {
             visibility: "visible",
         },
-        0.00001// stagger time     
+        0.9// stagger time     
     )
     .to(".fake-btn", 0.1, {
         backgroundColor: "rgb(255,128,160)",
