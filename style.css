@@ -424,4 +424,33 @@ body {
     bottom: -40px; 
     right: 5%;
   }
+
+  .baloons img {
+    /* Make balloons smaller on phones */
+    max-height: 100px;
+  }
+
+  .wish-hbd {
+    /* Slightly reduce “Happy Birthday” text 
+       and force it onto a single line if possible */
+    font-size: 1.8rem;
+    white-space: nowrap;
+  }
+}
+
+@media screen and (max-width: 500px), screen and (aspect-ratio: 9/19) {
+  .container {
+    /* Shift the container a bit more upward for vertical screens */
+    top: 7vh;
+  }
+
+  .four .text-box {
+    /* Increase bottom margin for fake-btn clearance */
+    margin-bottom: 3.5rem;
+  }
+
+  .text-box .fake-btn {
+    /* Raise the button a bit more */
+    bottom: -50px;
+  }
 }
