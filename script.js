@@ -246,7 +246,7 @@ const animationTimeline = () => {
         1.5, {
             visibility: "visible",
         },
-        0.0001// stagger time     
+        0.09// stagger time     
     )
     .to(".fake-btn", 0.1, {
         backgroundColor: "rgb(255,128,160)",
