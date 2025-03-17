@@ -183,6 +183,9 @@ const animationTimeline = () => {
         skewX: "-15deg"
     }
 
+    // Right before creating the timeline, disable replay area interactions:
+    gsap.set(".ten", { pointerEvents: "none", opacity: 0 });
+
     // timeline
     const tl = new TimelineMax();
 
@@ -243,7 +246,7 @@ const animationTimeline = () => {
         1.5, {
             visibility: "visible",
         },
-        0.09// stagger time     
+        0.0001// stagger time     
     )
     .to(".fake-btn", 0.1, {
         backgroundColor: "rgb(255,128,160)",
@@ -258,7 +261,7 @@ const animationTimeline = () => {
         },
     "+=1")
     .from(".idea-1", 0.7, ideaTextTrans)
-    .to(".idea-1", 0.7, ideaTextTransLeave, "+=2.5")
+    .to(".idea-1", 0.7, ideaTextTransLeave, "+=4")
     .from(".idea-2", 0.7, ideaTextTrans)
     .to(".idea-2", 0.7, ideaTextTransLeave, "+=2.5")
     .from(".idea-3", 0.7, ideaTextTrans)
@@ -524,15 +527,18 @@ const animationTimeline = () => {
         "+=4"
     )
     .to(".nine", { opacity: 0, duration: 1, ease: "power2.out" })
-
-    .set(".ten", { opacity: 1 });
-
+    .set(".ten", { opacity: 1, pointerEvents: "auto" });
 
     document.querySelector("#replay").addEventListener("click", () => {
-        gsap.to(".ten", { opacity: 0, duration: 0.5, ease: "power2.out", onComplete: () => {
-            tl.restart(); // Restart the GSAP animation
-            gsap.set(".ten", { opacity: 1 }); // Ensure it reappears after restart
-        }});
+        gsap.to(".ten", { 
+            opacity: 0, 
+            pointerEvents: "none", 
+            duration: 0.5, 
+            ease: "power2.out", 
+            onComplete: () => {
+                tl.restart(); // Restart the GSAP animation
+            }
+        });
     });    
     
 
@@ -571,7 +577,7 @@ function createEmojiRain(options = {}) {
     const emojis = [ '💝', 'BABY', '🥳', '💋', 'BAE', '💗', '🎁', 'LOVE', '🎉', 'HONEY',  
         '🎊', 'MY LOVE', '💞', '💖', 'QUEEN', '🍰', 'DARLING', '🥰', 'RANI', '✨',  
         '💓', 'SWEET', 'JOY', 'BABE', '😍', '💘', '❤️', 'CUTE', '🎂', 'DEAR',  
-        'KISS', 'MOON', '🧁', '💋', '🍬', 'BBG', 'SMILE' ];
+        'KISS', 'MOON', '🧁', '💋', '🍬', 'BBG', 'SMILE', '💎', '💍', 'LOVELY' ];
 
     let emojiContainer = document.querySelector('.emoji-rain');
     if (!emojiContainer) {
@@ -648,7 +654,7 @@ function createEmojiRain(options = {}) {
             {
                 y: window.innerHeight + 100,
                 x: startX + gsap.utils.random(-50, 50),
-                rotation: rotation + gsap.utils.random(-15, 15),
+                rotation: rotation + gsap.utils.random(-20, 15),
                 duration: duration,
                 ease: "power1.out",
                 onComplete: () => {
