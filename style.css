@@ -3,12 +3,13 @@ html {
 }
 
 body {
-  background: radial-gradient(circle at top left,#91b6fa , #5597fa );
+  background: radial-gradient(circle at top left,#000000 , #000000 );
   background-size: 150% 150%;
   animation: gradientAnimation 10s linear infinite; /* Using linear easing for smooth, consistent transitions */
   margin: 0;
   font-family: 'Poppins', sans-serif;
   color: #fff;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); /* Add a glow to all text elements */
 }
 
 @keyframes gradientAnimation {
@@ -80,6 +81,7 @@ body {
   background-color: #fff; /* makes the inside white */
   /* Optional shadow to separate it from the background */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: -30px; /* Raise the box above */
 }
 
 .four .text-box p {
@@ -116,7 +118,7 @@ body {
 }
 
 .five .idea-5 {
-  font-size: 5rem;
+  font-size: 7rem;
 }
 
 .idea-5 span, .idea-6 span, .wish-hbd span {
@@ -127,11 +129,46 @@ body {
   font-size: 15rem;
 }
 
+/* Adjusting font sizes to match the existing style */
+.transition-line,
+.final-one,
+.final-two,
+.final-three,
+.final-four,
+.final-five,
+.final-six {
+  font-size: 2rem;
+}
+
+.poem-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 80%;
+}
+
+.poem-container p {
+  font-size: 5rem;
+  opacity: 0;
+  color: white;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 1);
+  transform: translateY(20px);
+  font-family: 'Garamond', serif;  /* Change the font here */
+}
+
+.transition-feeling, 
+.transition-deep, 
+.transition-after-poem {
+    font-size: 2 rem;
+}
 
 .six {
   position: relative;
-  top: 10vh;
+  top: 5vh;
   z-index: 1;
+  
 }
 
 .six img {
@@ -239,7 +276,7 @@ body {
 }
 
 .wish-hbd {
-  font-size: 5em;
+  font-size: 3.5em;
   margin: 0;
   text-transform: uppercase;
 }
@@ -255,8 +292,40 @@ body {
   font-weight: lighter;
 }
 
+.ten {
+  height: auto; /* No fixed height */
+  width: auto; /* No fixed width */
+  position: fixed;
+  bottom: 40px; /* Position at the bottom-right */
+  right: 40px;
+  z-index: 100;
+  opacity: 0; /* Initially hidden */
+}
 
 #replay {
+  font-size: 40px;  /* Set the size of the heart */
   cursor: pointer;
-  z-index: 3;
+  color: red;
+  text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+  animation: heartbeat 1.5s infinite;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+#replay:hover {
+  text-shadow: 0 0 30px rgba(255, 0, 0, 1);
+}
+
+
+h1, h2, h3, h4, h5, h6, p, span, div {
+  text-shadow: 0 0 5px rgba(255, 255, 255, 2); /* Add a glow to all text elements */
+}
+
+/* Remove text glow from elements created by createEmojiRain. 
+   Replace .emoji-rain with the actual selector your function uses. */
+.emoji-rain, .emoji-rain * {
+  text-shadow: none !important;
 }
