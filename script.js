@@ -1,5 +1,129 @@
-// trigger to play music in the background with sweetalert
-window.addEventListener('load', () => {
+function promptForPassword() {
+    Swal.fire({
+        title: 'Enter Password',
+        icon: 'info',
+        input: 'password',
+        inputLabel: 'Password',
+        showCancelButton: true,
+        confirmButtonText: 'Unlock',
+        cancelButtonText: 'Cancel',
+    }).then((result) => {
+        if (result.dismiss) {
+            // User canceled
+            Swal.fire('Access Denied', 'You cannot access this page.', 'error').then(() => {
+                document.body.innerHTML = '';
+            });
+        } else if (result.value === '1') {
+            // Correct password; now show gradient selector first
+            showGradientSelector();
+        } else {
+            // Incorrect password; re-prompt
+            Swal.fire('Wrong Password', 'Please try again.', 'error').then(() => {
+                promptForPassword();
+            });
+        }
+    });
+}
+
+// New function for selecting background gradient
+function showGradientSelector() {
+    // Remove text glow
+    document.body.classList.add("disable-text-glow");
+
+    const gradients = {
+        lightBlue: 'radial-gradient(circle at top left, #91b6fa, #5597fa)',
+        darkBlue: 'radial-gradient(circle at top left, #0a0f3a, #020b26)',
+        black: 'black'
+    };
+
+    const htmlContent = `
+        <div class="gradient-options" style="display: flex; flex-direction: column; align-items: center;">
+            <div class="gradient-option" data-gradient="lightBlue" 
+                 style="background: ${gradients.lightBlue}; height: 60px; width: 90%; margin: 10px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                Light Blue Gradient
+            </div>
+            <div class="gradient-option" data-gradient="darkBlue" 
+                 style="background: ${gradients.darkBlue}; height: 60px; width: 90%; margin: 10px; border-radius: 8px; cursor: pointer; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                Dark Blue Gradient
+            </div>
+            <div class="gradient-option" data-gradient="black" 
+                 style="background: ${gradients.black}; height: 60px; width: 90%; margin: 10px; border-radius: 8px; cursor: pointer; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                All Black
+            </div>
+        </div>
+    `;
+    
+    Swal.fire({
+        title: 'Select Background',
+        html: htmlContent,
+        showCancelButton: false,
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
+        didOpen: () => {
+            const options = document.querySelectorAll('.gradient-option');
+            options.forEach(option => {
+                option.addEventListener('mouseenter', () => {
+                    const gradientType = option.getAttribute('data-gradient');
+                    document.body.style.background = gradients[gradientType];
+                });
+                option.addEventListener('mouseleave', () => {
+                    if (!document.body.dataset.selectedGradient) {
+                        document.body.style.background = 'black';
+                    } else {
+                        document.body.style.background = gradients[document.body.dataset.selectedGradient];
+                    }
+                });
+                option.addEventListener('click', () => {
+                    options.forEach(opt => opt.classList.remove('selected-gradient'));
+                    option.classList.add('selected-gradient');
+                    document.body.dataset.selectedGradient = option.getAttribute('data-gradient');
+                });
+            });
+            
+            const style = document.createElement('style');
+            style.textContent = `
+                .gradient-option {
+                    border: 3px solid transparent;
+                    transition: transform 0.2s ease, box-shadow 0.2s ease;
+                    box-shadow: 0px 2px 8px rgba(0,0,0,0.2);
+                }
+                .gradient-option:hover {
+                    transform: scale(1.05);
+                    box-shadow: 0px 4px 16px rgba(0,0,0,0.4);
+                }
+                .selected-gradient {
+                    border: 3px solid #fff !important;
+                    box-shadow: 0px 0px 15px #fff;
+                }
+                .gradient-options {
+                    animation: fadeIn 0.5s ease forwards;
+                }
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(-10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+            `;
+            document.head.appendChild(style);
+        },
+        preConfirm: () => {
+            return document.body.dataset.selectedGradient || 'black';
+        }
+    }).then((result) => {
+        // Restore text glow
+        document.body.classList.remove("disable-text-glow");
+
+        if (result.isConfirmed && result.value) {
+            document.body.style.background = gradients[result.value];
+        } else {
+            document.body.style.background = 'black';
+        }
+        
+        triggerMusicPrompt();
+    });
+}
+
+// Changed code: wrap existing music prompt in a function
+function triggerMusicPrompt() {
     Swal.fire({
         title: 'Do you want to play music in the background?',
         icon: 'warning',
@@ -16,7 +140,10 @@ window.addEventListener('load', () => {
             animationTimeline();
         }
     });
-});
+}
+
+// Now run the password check first on load
+window.addEventListener('load', promptForPassword);
 
 // animation timeline
 const animationTimeline = () => {
@@ -121,7 +248,7 @@ const animationTimeline = () => {
     .to(".fake-btn", 0.1, {
         backgroundColor: "rgb(255,128,160)",
     },
-    "+=4")
+    "+=1")
     .to(
         ".four",
         0.5, {
@@ -182,6 +309,7 @@ const animationTimeline = () => {
         },
         0.2
     )
+    
     .staggerTo(
         ".idea-6 span",
         0.8, {
@@ -193,6 +321,107 @@ const animationTimeline = () => {
         0.2,
         "+=1.5"
     )
+    .from(".transition-line", 0.7, { opacity: 0, y: 20, })
+    .to(".transition-line", 0.7, { opacity: 0, y: -20, }, "+=2")
+  
+    .from(".final-one", 0.7, { opacity: 0, y: 20, })
+    .to(".final-one", 0.7, { opacity: 0, y: -20, }, "+=2")
+  
+    .from(".final-two", 0.7, { opacity: 0, y: 20, })
+    .to(".final-two", 0.7, { opacity: 0, y: -20, }, "+=2")
+  
+    .from(".final-three", 0.7, { opacity: 0, y: 20, })
+    .to(".final-three", 0.7, { opacity: 0, y: -20, }, "+=2")
+  
+    .from(".final-four", 0.7, { opacity: 0, y: 20, })
+    .to(".final-four", 0.7, { opacity: 0, y: -20, }, "+=2")
+  
+    .from(".final-five", 0.7, { opacity: 0, y: 20, })
+    .to(".final-five", 0.7, { opacity: 0, y: -20, }, "+=2")
+  
+    .from(".final-six", 0.7, { opacity: 0, y: 20, })
+    .to(".final-six", 0.7, { opacity: 0, y: -20, ease: Power2.easeIn }, "+=2")
+  
+  // ✨ Transition to Poem
+    .from(".poem-intro-one", 0.7, { opacity: 0, y: 20, })
+    .to(".poem-intro-one", 0.7, { opacity: 0, y: -20, }, "+=4")
+  
+    .from(".poem-intro-two", 0.7, { opacity: 0, y: 20, })
+    .to(".poem-intro-two", 0.7, { opacity: 0, y: -20, }, "+=3")
+  
+    function showPoemAnimation(tl) {
+        const poem = [
+            ["Rani, the love of my life so true,", "If I were a cat, I'd still choose you.", "In all my nine lives, time after time,", "You’d forever and always be mine."],
+            ["You're the most beautiful soul I've seen,", "Your vibe gives me the strength I need.", "Your voice calms the war inside of me,", "Like waves that soothe the restless sea."],
+            ["Your eyes shine brighter than the stars,", "A universe held in your tender heart.", "I long to hold you, just for a while,", "To feel your warmth, to live in your smile."],
+            ["Yet sometimes, you forget to care,", "For the heart that beats with love so rare.", "You hide your pain, but I can see,", "The weight you carry silently."],
+            ["And when you do, it breaks me too,", "Like I have failed in loving you.", "You love the world with a heart so wide,", "But sometimes, love should stand with pride."],
+            ["You give so much, yet you forget,", "That you, my love, deserve respect.", "I love the way you tease me light,", "Your playful ways just feel so right."],
+            ["But when the words grow sharp and deep,", "They wound my heart and make me weep.", "I want to show you how precious you are,", "May God grant your wishes, near and far."],
+            ["But not so easily, that you forget,", "The beauty of working for dreams unmet.", "Yet what pains me most, beyond control,", "Is the distance that tugs upon my soul."],
+            ["You deserve the world, yet here I stand,", "So far away, yet reaching my hand.", "Rani, my love, my heart, my light,", "With you, my world feels just so right."]
+        ];
+    
+        const container = document.createElement("div");
+        container.classList.add("poem-container");
+        document.body.appendChild(container);
+    
+        let stanzaIndex = 0;
+        
+        // 🔹 Pause main GSAP timeline while poem plays
+        tl.pause();
+    
+        function showStanza() {
+            if (stanzaIndex >= poem.length) {
+                // 🔹 Resume the main GSAP timeline when poem is done
+                gsap.to(container, { 
+                    opacity: 0, duration: 1.5, ease: "expo.out", 
+                    onComplete: () => {
+                        container.remove();
+                        tl.resume(); // Resume main timeline
+                    } 
+                });
+                return;
+            }
+    
+            container.innerHTML = ""; // Clear previous stanza
+    
+            let tlStanza = gsap.timeline();
+            poem[stanzaIndex].forEach((line, i) => {
+                let lineElement = document.createElement("p");
+                lineElement.textContent = line;
+                lineElement.style.opacity = "0";
+                container.appendChild(lineElement);
+    
+                tlStanza.to(lineElement, { opacity: 1, duration: 1, delay: i * 0.9, ease: "power2.in" });
+            });
+    
+            tlStanza.to(container.children, { 
+                opacity: 0, duration: 1.5, delay: 4, ease: "expo.out", stagger: 0.3, 
+                onComplete: () => {
+                    stanzaIndex++;
+                    showStanza(); // Show next stanza
+                }
+            });
+        }
+    
+        showStanza(); // Start the animation
+    }
+    
+    // 🔹 Add Poem Animation to Timeline (it will pause until the poem completes)
+    tl.add(() => showPoemAnimation(tl), "+=2"); // Adjust timing if needed    
+
+
+  // 💖 Transition Before HBD Wish
+  tl.from(".transition-feeling", 0.7, { opacity: 0, scale: 1.2, ease: Expo.easeOut })
+    .to(".transition-feeling", 0.7, { opacity: 0, scale: 1.2, ease: Expo.easeIn }, "+=2")
+  
+    .from(".transition-deep", 0.7, { opacity: 0, scale: 1.2, ease: Expo.easeOut })
+    .to(".transition-deep", 0.7, { opacity: 0, scale: 1.2, ease: Expo.easeIn }, "+=2")
+  
+    .from(".transition-after-poem", 0.7, { opacity: 0, scale: 1.2, ease: Expo.easeOut })
+    .to(".transition-after-poem", 0.7, { opacity: 0, scale: 1.2, ease: Expo.easeIn }, "+=2")
+  
     .staggerFromTo(
         ".baloons img",
         2.5, 
@@ -292,15 +521,20 @@ const animationTimeline = () => {
         0.5, {
             rotation: 90,
         },
-        "+=1"
-    );
+        "+=4"
+    )
+    .to(".nine", { opacity: 0, duration: 1, ease: "power2.out" })
+
+    .set(".ten", { opacity: 1 });
 
 
-    // Restart Animation on click
-    const replyBtn = document.getElementById("replay");
-    replyBtn.addEventListener("click", () => {
-        tl.restart();
-    });
+    document.querySelector("#replay").addEventListener("click", () => {
+        gsap.to(".ten", { opacity: 0, duration: 0.5, ease: "power2.out", onComplete: () => {
+            tl.restart(); // Restart the GSAP animation
+            gsap.set(".ten", { opacity: 1 }); // Ensure it reappears after restart
+        }});
+    });    
+    
 
     // Create emoji rain
     createEmojiRain();
@@ -319,26 +553,33 @@ const animationTimeline = () => {
 function createEmojiRain(options = {}) {
     // Default settings with combined configuration options
     const settings = {
-        minSize: 25,             // Minimum emoji size in pixels
-        maxSize: 60,             // Maximum emoji size in pixels
-        baseSpeed: 5,            // Base falling duration
-        speedFactor: 1,        // Speed multiplier (higher = slower)
-        frequency: 500,          // Milliseconds between emoji creation
-        behindContent: true,     // Position emojis behind other content
+        // Emoji size range
+        minSize: 25,
+        maxSize: 60,
+        
+        // Text size range
+        minTextSize: 20,
+        maxTextSize: 40,
+        
+        baseSpeed: 6,
+        speedFactor: 1,
+        frequency: 500,
+        behindContent: true,
         ...options
     };
     
-    // Combined emoji list from both implementations
-    const emojis = ['🎂', '🎁', '🎉', '🎊', '✨', '💖', '🍰', '🧁', '🍬', '🥳', '😍', '❤️', '💓', '💗', '💖', '💞', '💕', '💘', '💝'];
-    
-    // Create or get container for emojis
+    const emojis = [ '💝', 'BABY', '🥳', '💋', 'BAE', '💗', '🎁', 'LOVE', '🎉', 'HONEY',  
+        '🎊', 'MY LOVE', '💞', '💖', 'QUEEN', '🍰', 'DARLING', '🥰', 'RANI', '✨',  
+        '💓', 'SWEET', 'JOY', 'BABE', '😍', '💘', '❤️', 'CUTE', '🎂', 'DEAR',  
+        'KISS', 'MOON', '🧁', '💋', '🍬', 'BBG', 'SMILE' ];
+
     let emojiContainer = document.querySelector('.emoji-rain');
     if (!emojiContainer) {
         emojiContainer = document.createElement('div');
         emojiContainer.className = 'emoji-rain';
         document.body.appendChild(emojiContainer);
-        
-        // Add styling for the container
+
+        // Add styling for the container and text-based items
         const style = document.createElement('style');
         style.innerHTML = `
             .emoji-rain {
@@ -355,31 +596,49 @@ function createEmojiRain(options = {}) {
                 position: absolute;
                 user-select: none;
             }
+            .emoji-rain .text-emoji {
+                color: rgb(255, 114, 150);
+                font-weight: 700;
+            }
         `;
         document.head.appendChild(style);
     }
-    
+
     // Create interval for continuous emoji creation
     const intervalId = setInterval(() => {
-        // Create emoji element
-        const emoji = document.createElement('span');
-        emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-        emojiContainer.appendChild(emoji);
-        
-        // Random size between min and max
-        const size = Math.random() * (settings.maxSize - settings.minSize) + settings.minSize;
-        emoji.style.fontSize = `${size}px`;
-        
-        // Random position and rotation
+        const item = emojis[Math.floor(Math.random() * emojis.length)];
+        const element = document.createElement('span');
+
+        // Check if item is text, then apply text-emoji class and size
+        let size;
+        if (/[a-zA-Z]/.test(item)) {
+            element.classList.add('text-emoji');
+            size = Math.random() * (settings.maxTextSize - settings.minTextSize) + settings.minTextSize;
+
+            // Add pulsing glow effect to text only
+            gsap.to(element, {
+                textShadow: "0 0 10px #ff91ad",    // customize color / intensity
+                duration: 1.2,                    // pulsing speed
+                repeat: -1,
+                yoyo: true,
+                ease: "power1.inOut"
+            });
+        } else {
+            size = Math.random() * (settings.maxSize - settings.minSize) + settings.minSize;
+        }
+
+        element.style.fontSize = `${size}px`;
+        element.textContent = item;
+        emojiContainer.appendChild(element);
+
+        // Apply falling animation
         const startX = Math.random() * window.innerWidth;
         const rotation = Math.random() * 15;
-        
-        // Calculate duration with variation for natural feel
         const durationVariation = gsap.utils.random(0.8, 1.2);
         const duration = settings.baseSpeed * settings.speedFactor * durationVariation;
-        
-        // Apply GSAP animation with combined approach
-        gsap.fromTo(emoji, 
+
+        gsap.fromTo(
+            element,
             {
                 x: startX,
                 y: -50,
@@ -391,19 +650,16 @@ function createEmojiRain(options = {}) {
                 x: startX + gsap.utils.random(-50, 50),
                 rotation: rotation + gsap.utils.random(-15, 15),
                 duration: duration,
-                // Use your preferred ease (power1.out for smoother movement)
                 ease: "power1.out",
                 onComplete: () => {
-                    // Clean up DOM
-                    if (emoji.parentNode) {
-                        emoji.parentNode.removeChild(emoji);
+                    if (element.parentNode) {
+                        element.parentNode.removeChild(element);
                     }
                 }
             }
         );
     }, settings.frequency);
-    
-    // Return control object
+
     return {
         stop: () => clearInterval(intervalId)
     };
