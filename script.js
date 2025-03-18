@@ -13,7 +13,7 @@ function promptForPassword() {
             Swal.fire('Access Denied', 'You cannot access this page.', 'error').then(() => {
                 document.body.innerHTML = '';
             });
-        } else if (result.value === '190309') {
+        } else if (result.value === '1') {
             // Correct password; now show gradient selector first
             showGradientSelector();
         } else {
