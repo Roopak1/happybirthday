@@ -4,7 +4,7 @@ function promptForPassword() {
         icon: 'info',
         input: 'password',
         inputLabel: 'Password',
-        showCancelButton: true,
+        showCancelButton: false,
         confirmButtonText: 'Unlock',
         cancelButtonText: 'Cancel',
     }).then((result) => {
@@ -13,7 +13,7 @@ function promptForPassword() {
             Swal.fire('Access Denied', 'You cannot access this page.', 'error').then(() => {
                 document.body.innerHTML = '';
             });
-        } else if (result.value === '1') {
+        } else if (result.value === '190309') {
             // Correct password; now show gradient selector first
             showGradientSelector();
         } else {
@@ -122,6 +122,132 @@ function showGradientSelector() {
     });
 }
 
+// Add this function to create animation controls
+function createAnimationControls(timeline) {
+    // Create control container
+    const controlsContainer = document.createElement('div');
+    controlsContainer.className = 'animation-controls';
+    
+    // Create Music control button (now first for top placement)
+    const musicButton = document.createElement('button');
+    musicButton.className = 'control-btn music-btn';
+    musicButton.textContent = 'Play Music';
+    
+    // Create a row container for the other buttons
+    const bottomRowContainer = document.createElement('div');
+    bottomRowContainer.className = 'bottom-row-controls';
+    
+    // Create Back button
+    const backButton = document.createElement('button');
+    backButton.className = 'control-btn';
+    backButton.textContent = 'Back';
+    
+    // Create Pause/Play button
+    const pausePlayButton = document.createElement('button');
+    pausePlayButton.className = 'control-btn';
+    pausePlayButton.textContent = 'Pause';
+    
+    // Add bottom row buttons to their container
+    bottomRowContainer.appendChild(backButton);
+    bottomRowContainer.appendChild(pausePlayButton);
+    
+    // Add all elements to main container (music on top, then row of other buttons)
+    controlsContainer.appendChild(musicButton);
+    controlsContainer.appendChild(bottomRowContainer);
+    
+    // Add container to body
+    document.body.appendChild(controlsContainer);
+    
+    // Add styles
+    const style = document.createElement('style');
+    style.textContent = `
+        .animation-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+        
+        .bottom-row-controls {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .control-btn {
+            background-color: white;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.2s ease;
+        }
+        
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        
+        .control-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        
+        .music-btn {
+            background-color: #ffcce0;
+            width: 100%;
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // Add event listeners
+    backButton.addEventListener('click', () => {
+        // Go back 5 seconds in the timeline
+        const currentTime = timeline.time();
+        const newTime = Math.max(0, currentTime - 5);
+        timeline.seek(newTime);
+    });
+    
+    pausePlayButton.addEventListener('click', () => {
+        if (timeline.paused()) {
+            timeline.resume();
+            pausePlayButton.textContent = 'Pause';
+        } else {
+            timeline.pause();
+            pausePlayButton.textContent = 'Play';
+        }
+    });
+    
+    // Add music control functionality
+    const audioElement = document.querySelector('.song');
+    
+    // Initial button state should reflect audio's initial state
+    if (audioElement) {
+        musicButton.textContent = audioElement.paused ? 'Play Music' : 'Pause Music';
+        
+        musicButton.addEventListener('click', () => {
+            if (audioElement.paused) {
+                audioElement.play();
+                musicButton.textContent = 'Pause Music';
+            } else {
+                audioElement.pause();
+                musicButton.textContent = 'Play Music';
+            }
+        });
+    } else {
+        // If audio element doesn't exist or isn't available yet
+        musicButton.style.display = 'none';
+    }
+    
+    return controlsContainer;
+}
+
 // Changed code: wrap existing music prompt in a function
 function triggerMusicPrompt() {
     Swal.fire({
@@ -133,12 +259,18 @@ function triggerMusicPrompt() {
         confirmButtonText: 'Yes',
         cancelButtonText: 'No',
     }).then((result) => {
-        if (result.isConfirmed) {
-            document.querySelector('.song').play();
-            animationTimeline();
-        } else {
-            animationTimeline();
+        const audioElement = document.querySelector('.song');
+        
+        if (result.isConfirmed && audioElement) {
+            audioElement.play();
+            // Find and update the music button if it exists
+            const musicBtn = document.querySelector('.music-btn');
+            if (musicBtn) {
+                musicBtn.textContent = 'Pause Music';
+            }
         }
+        
+        animationTimeline();
     });
 }
 
@@ -186,8 +318,11 @@ const animationTimeline = () => {
     // Right before creating the timeline, disable replay area interactions:
     gsap.set(".ten", { pointerEvents: "none", opacity: 0 });
 
-    // timeline
+    // Create the timeline
     const tl = new TimelineMax();
+    
+    // Add animation controls after timeline is created
+    createAnimationControls(tl);
 
     tl.to(".container", 0.6, {
         visibility: "visible"
@@ -200,6 +335,14 @@ const animationTimeline = () => {
         opacity: 0,
         y: 10
     }, "+=7")
+    .from(".zero-1", 0.7, {
+        opacity: 0,
+        y: 10
+    })
+    .to(".zero-1", 0.7, {
+        opacity: 0,
+        y: 10
+    }, "+=9")
     .from(".one", 0.7, {
         opacity: 0,
         y: 10
@@ -381,7 +524,10 @@ const animationTimeline = () => {
                     opacity: 0, duration: 1.5, ease: "expo.out", 
                     onComplete: () => {
                         container.remove();
-                        tl.resume(); // Resume main timeline
+                        // Add delay before resuming the timeline
+                        setTimeout(() => {
+                            tl.resume(); // Resume main timeline
+                        }, 6000); // 6 seconds delay (adjust as needed)
                     } 
                 });
                 return;
@@ -518,7 +664,7 @@ const animationTimeline = () => {
         y: 30,
         zIndex: "-1",
     })
-    .staggerFrom(".nine p", 1, ideaTextTrans, 1.2)
+    .staggerFrom(".nine p", 1, ideaTextTrans, 2.5)
     .to(
         ".last-smile",
         0.5, {
@@ -569,15 +715,20 @@ function createEmojiRain(options = {}) {
         
         baseSpeed: 6,
         speedFactor: 1,
-        frequency: 500,
+        frequency: 450,
         behindContent: true,
         ...options
     };
     
-    const emojis = [ '💝', 'BABY', '🥳', '💋', 'BAE', '💗', '🎁', 'LOVE', '🎉', 'HONEY',  
-        '🎊', 'MY LOVE', '💞', '💖', 'QUEEN', '🍰', 'DARLING', '🥰', 'RANI', '✨',  
-        '💓', 'SWEET', 'JOY', 'BABE', '😍', '💘', '❤️', 'CUTE', '🎂', 'DEAR',  
-        'KISS', 'MOON', '🧁', '💋', '🍬', 'BBG', 'SMILE', '💎', '💍', 'LOVELY' ];
+    const emojis = [ 
+        'BABE', '🎂', '💍', 'QUEEN', '🎉', 'DARLING', '🎊', '💖', '🍰', 'JOY',
+        '💋', 'SWEET', '🥳', '💘', '💝', '🥰', '✨', '❤️', '💎', '💞', 
+        'BAE', '🎉', '💋', '💋', '🍬', 'SMILE', '💋', '💞', 'CUTE', '💖',
+        'KISS', '✨', '💗', '💓', 'RANI', 'BABY', 'LOVE', '🎂', '🍬', 'BBG',
+        '🧁', '😍', '💎', '💍', '🥰', '💝', '🥳', 'MY LOVE', 'LOVELY', 'HONEY',
+        '💗', '😍', '💓', '🎊', '🍰', '🧁', '❤️', 'DEAR', '🎁', 'MOON', '💘', '🎁'
+      ];
+      
 
     let emojiContainer = document.querySelector('.emoji-rain');
     if (!emojiContainer) {
