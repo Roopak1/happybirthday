@@ -49,6 +49,10 @@ body {
   font-size: 2rem;
 }
 
+.zero-1 {
+  font-size: 2rem;
+}
+
 .one {
   font-size: 5rem;
 }
@@ -150,7 +154,7 @@ body {
 }
 
 .poem-container p {
-  font-size: 5rem;
+  font-size: 3rem;
   opacity: 0;
   color: white;
   text-shadow: 0 0 10px rgba(255, 255, 255, 1);
@@ -184,6 +188,7 @@ body {
   /* transform: scale(0.1); */
   top: -35%;
   width: 80px;
+  transform: translate(75px,-5px);
 }
 
 .baloons img {
